@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbTallerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Cita">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Hora" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Descripcion" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
+    <Property Name="IdCliente" Type="Int64" Nullable="false" />
+    <Property Name="IdTaller" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Cliente" Relationship="Self.FK__Cita__IdCliente__3B75D760" FromRole="Cita" ToRole="Cliente" />
+    <NavigationProperty Name="Taller" Relationship="Self.FK__Cita__IdTaller__3C69FB99" FromRole="Cita" ToRole="Taller" />
+  </EntityType>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Direccion" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__IdCliente__3B75D760" FromRole="Cliente" ToRole="Cita" />
+  </EntityType>
+  <EntityType Name="Taller">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__IdTaller__3C69FB99" FromRole="Taller" ToRole="Cita" />
+  </EntityType>
+  <Association Name="FK__Cita__IdCliente__3B75D760">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cita__IdTaller__3C69FB99">
+    <End Role="Taller" Type="Self.Taller" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Taller">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="IdTaller" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbTallerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cita" EntityType="Self.Cita" />
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+    <EntitySet Name="Taller" EntityType="Self.Taller" />
+    <AssociationSet Name="FK__Cita__IdCliente__3B75D760" Association="Self.FK__Cita__IdCliente__3B75D760">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cita__IdTaller__3C69FB99" Association="Self.FK__Cita__IdTaller__3C69FB99">
+      <End Role="Taller" EntitySet="Taller" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

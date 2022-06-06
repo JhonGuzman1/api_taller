@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dbTallerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cita">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="Hora" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="IdCliente" Type="bigint" Nullable="false" />
+          <Property Name="IdTaller" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="Apellido" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="date" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Taller">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Cita__IdCliente__3B75D760">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cita__IdTaller__3C69FB99">
+          <End Role="Taller" Type="Self.Taller" Multiplicity="1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Taller">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="IdTaller" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbTallerModelStoreContainer">
+          <EntitySet Name="Cita" EntityType="Self.Cita" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Taller" EntityType="Self.Taller" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cita__IdCliente__3B75D760" Association="Self.FK__Cita__IdCliente__3B75D760">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Cita" EntitySet="Cita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cita__IdTaller__3C69FB99" Association="Self.FK__Cita__IdTaller__3C69FB99">
+            <End Role="Taller" EntitySet="Taller" />
+            <End Role="Cita" EntitySet="Cita" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbTallerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cita">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Hora" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Descripcion" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <Property Name="IdCliente" Type="Int64" Nullable="false" />
+          <Property Name="IdTaller" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Cita__IdCliente__3B75D760" FromRole="Cita" ToRole="Cliente" />
+          <NavigationProperty Name="Taller" Relationship="Self.FK__Cita__IdTaller__3C69FB99" FromRole="Cita" ToRole="Taller" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellido" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Direccion" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__IdCliente__3B75D760" FromRole="Cliente" ToRole="Cita" />
+        </EntityType>
+        <EntityType Name="Taller">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cita" Relationship="Self.FK__Cita__IdTaller__3C69FB99" FromRole="Taller" ToRole="Cita" />
+        </EntityType>
+        <Association Name="FK__Cita__IdCliente__3B75D760">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cita__IdTaller__3C69FB99">
+          <End Role="Taller" Type="Self.Taller" Multiplicity="1" />
+          <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Taller">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Cita">
+              <PropertyRef Name="IdTaller" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbTallerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cita" EntityType="Self.Cita" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Taller" EntityType="Self.Taller" />
+          <AssociationSet Name="FK__Cita__IdCliente__3B75D760" Association="Self.FK__Cita__IdCliente__3B75D760">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Cita" EntitySet="Cita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cita__IdTaller__3C69FB99" Association="Self.FK__Cita__IdTaller__3C69FB99">
+            <End Role="Taller" EntitySet="Taller" />
+            <End Role="Cita" EntitySet="Cita" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbTallerModelStoreContainer" CdmEntityContainer="dbTallerEntities">
+          <EntitySetMapping Name="Cita">
+            <EntityTypeMapping TypeName="dbTallerModel.Cita">
+              <MappingFragment StoreEntitySet="Cita">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdTaller" ColumnName="IdTaller" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="dbTallerModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Taller">
+            <EntityTypeMapping TypeName="dbTallerModel.Taller">
+              <MappingFragment StoreEntitySet="Taller">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

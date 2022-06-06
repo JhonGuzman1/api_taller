@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbTallerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cita">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Fecha" Type="date" Nullable="false" />
+    <Property Name="Hora" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
+    <Property Name="IdCliente" Type="bigint" Nullable="false" />
+    <Property Name="IdTaller" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Cliente">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="Apellido" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="FechaNacimiento" Type="date" Nullable="false" />
+    <Property Name="Direccion" Type="varchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Taller">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Cita__IdCliente__3B75D760">
+    <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cliente">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="IdCliente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cita__IdTaller__3C69FB99">
+    <End Role="Taller" Type="Self.Taller" Multiplicity="1" />
+    <End Role="Cita" Type="Self.Cita" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Taller">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Cita">
+        <PropertyRef Name="IdTaller" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="dbTallerModelStoreContainer">
+    <EntitySet Name="Cita" EntityType="Self.Cita" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Taller" EntityType="Self.Taller" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Cita__IdCliente__3B75D760" Association="Self.FK__Cita__IdCliente__3B75D760">
+      <End Role="Cliente" EntitySet="Cliente" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cita__IdTaller__3C69FB99" Association="Self.FK__Cita__IdTaller__3C69FB99">
+      <End Role="Taller" EntitySet="Taller" />
+      <End Role="Cita" EntitySet="Cita" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
